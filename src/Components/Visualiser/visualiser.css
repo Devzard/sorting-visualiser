@@ -1,0 +1,22 @@
+.visualiser-container {
+  background: whitesmoke;
+  height: 60vh;
+  margin: 0.3rem 1.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+.each-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  font-weight: 800;
+  font-size: smaller;
+  color: white;
+  text-shadow: 0.1rem 0rem 0.7rem rgba(0, 0, 0, 0.95);
+}
+.rotate-90 {
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  padding-left: 2rem;
+}
