@@ -1,46 +1,48 @@
 import React, { useState, useEffect } from "react";
 
 import "./Layout.css";
+import bubbleSort from "./Algorithms/bubbleSort";
 import Visualiser from "./Visualiser/Visualiser";
 
 function Layout() {
   const [arr, setArr] = useState([]);
-  const [arrLen, setArrLen] = useState([20]);
-  const [isSorted, setIsSorted] = useState(false);
-  const [timeDelay, setTimeDelay] = useState(50);
+  const [arrLen, setArrLen] = useState(20);
+  const [history, setHistory] = useState([]);
 
+  //initialise an array with random values , length is determined by state of arrLen
   const init = () => {
-    let newArr = [];
+    let tempArray = [],
+      randomVal = 0;
     for (let i = 0; i < arrLen; i++) {
-      let randomNum = Math.floor(Math.random() * (arrLen * 100));
-      newArr.push(randomNum);
+      randomVal = Math.floor(Math.random() * (arrLen * 10));
+      tempArray.push(randomVal);
     }
-    setArr(newArr);
+    setArr(tempArray);
   };
 
-  const rep = () => {
-    let timer = setInterval(() => {
-      init();
-    }, [1000]);
+  //calls sorting algorithm according to the parameter passed
+  const sort = (algo) => {
+    if (algo === "bubbleSort") {
+      let newHistory = bubbleSort(arr);
+      setHistory(newHistory);
+    }
   };
 
   useEffect(() => {
-    //rep();
+    init();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(history);
+  // }, [history]);
+
   return (
-    <div>
-      <Visualiser arr={arr} />
-      <div className={`sort-containers`}>
-        <button
-          className={`refresh-btn`}
-          onClick={() => {
-            init();
-            setIsSorted(false);
-          }}
-        >
-          Refresh
-        </button>
+    <div className={`container`}>
+      <div className={`visualiser`}>
+        <Visualiser arr={arr} history={history} />
+      </div>
+      <div className={`options-panel`}>
+        <button onClick={() => sort("bubbleSort")}>Bubble Sort</button>
       </div>
     </div>
   );

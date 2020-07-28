@@ -1,13 +1,1 @@
-.sort-containers {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
-}
-.refresh-btn {
-  border: none;
-  background-color: blueviolet;
-  color: white;
-  padding: 0.5rem 1rem;
-}
+
