@@ -6,7 +6,7 @@
   flex-direction: row;
   align-items: flex-end;
 }
-.each-row {
+.each-bar {
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -18,5 +18,5 @@
 .rotate-90 {
   transform: rotate(-90deg);
   -webkit-transform: rotate(-90deg);
-  padding-left: 2rem;
+  padding-left: 1rem;
 }

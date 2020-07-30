@@ -39,7 +39,11 @@ function Layout() {
   return (
     <div className={`container`}>
       <div className={`visualiser`}>
-        <Visualiser arr={arr} history={history} />
+        {arr.length != null && arr.length > 0 ? (
+          <Visualiser arr={arr} history={history} />
+        ) : (
+          <></>
+        )}
       </div>
       <div className={`options-panel`}>
         <button onClick={() => sort("bubbleSort")}>Bubble Sort</button>
