@@ -2,7 +2,7 @@ import React, { useState, useMemo, createRef, useEffect } from "react";
 
 import "./visualiser.css";
 
-function Visualiser({ arr, history }) {
+function Visualiser({ arr, history, sortingAlgo, animationSpeed }) {
   const [highestValue, setHighestValue] = useState(0);
   const [totalBars, setTotalBars] = useState(0);
 
@@ -12,19 +12,51 @@ function Visualiser({ arr, history }) {
     []
   );
 
+  const textRefs = useMemo(
+    () => Array.from({ length: arr.length }).map(() => createRef()),
+    []
+  );
+
   //animate function
   const animate = () => {
-    let i = 0;
-    let timer = setInterval(() => {
-      history[i].map((item, index) => {
-        let height = `${(item / highestValue) * 100}%`;
-        if (refs[index].current.style.height != height)
-          refs[index].current.style.height = height;
-      });
-      i++;
+    if (sortingAlgo == "bubbleSort") {
+      let i = 0;
+      let j = 0;
+      //to conditionally animate bars
+      let openValve = false;
+      let timer = setInterval(() => {
+        console.log("bubble sort animation runnig !");
+        if (openValve) {
+          //changing the active bars back to original color
+          refs[history.activeBars[j]].current.style.backgroundColor = "salmon";
+          if (history.activeBars[j + 1] < 20)
+            refs[history.activeBars[j + 1]].current.style.backgroundColor =
+              "salmon";
+          j += 2;
 
-      if (i >= history.length - 1) clearInterval(timer);
-    }, 300);
+          history.array[i].map((item, index) => {
+            let height = `${(item / highestValue) * 100}%`;
+            if (refs[index].current.style.height != height) {
+              refs[index].current.style.height = height;
+              textRefs[index].current.innerHTML = `${item}`;
+            }
+          });
+          i++;
+
+          openValve = !openValve;
+        } else {
+          //display active bars that are being compared
+          refs[history.activeBars[j]].current.style.backgroundColor = "cyan";
+          if (history.activeBars[j + 1] < 20)
+            refs[history.activeBars[j + 1]].current.style.backgroundColor =
+              "cyan";
+
+          openValve = !openValve;
+        }
+
+        if (i >= history.array.length - 1) clearInterval(timer);
+      }, animationSpeed);
+    }
   };
 
   useEffect(() => {
@@ -37,7 +69,7 @@ function Visualiser({ arr, history }) {
   }, []);
 
   useEffect(() => {
-    if (history.length != null && history.length > 0) animate();
+    if (history.array != null && history.array.length > 0) animate();
   }, [history]);
 
   return (
@@ -73,7 +105,9 @@ function Visualiser({ arr, history }) {
                 className={`each-bar`}
                 key={index}
               >
-                <span className={`rotate-90`}>{item}</span>
+                <span ref={textRefs[index]} className={`rotate-90`}>
+                  {item}
+                </span>
               </div>
             );
           })}
