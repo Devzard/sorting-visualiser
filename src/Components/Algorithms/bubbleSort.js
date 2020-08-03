@@ -4,6 +4,7 @@ const bubbleSort = (arr) => {
   let historyArr = [];
   let activeBars = [];
   let history = {};
+
   for (let i = 0; i < arrLen; i++) {
     for (let j = 0; j < arrLen - 1 - i; j++) {
       if (tempArray[j] > tempArray[j + 1]) {
